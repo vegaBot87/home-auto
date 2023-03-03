@@ -1,0 +1,93 @@
+esphome:
+  name: micky_elmo
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "<ssid>"
+  password: "<password>"
+
+  # manual ip setting will not appear in router ip list
+  # instead set this manual ip setting in router
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: <static_ip>
+    gateway: <gateway>
+    subnet: <subnet>
+    
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Micky Elmo Fallback Hotspot"
+    password: "<password>"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "<password>"
+
+ota:
+  password: "<password>"
+  
+output:
+  - platform: gpio
+    pin: D7
+    id: 'generic_out'
+    
+# set LED switch entry
+switch:
+  - platform: gpio
+    pin: D7
+    name: "LED D7"
+    id: gpio_d7
+  - platform: output
+    name: "micky_elmo_output"
+    id: 'micky_elmo_output'
+    output: 'generic_out'
+
+binary_sensor:
+  - platform: gpio
+    name: "button1"
+    pin: D5
+    on_press:
+      then:
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+        - delay: 0.5s
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+        - delay: 0.5s
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+    on_click:
+      min_length: 2000ms
+      max_length: 10000ms
+      then:
+        - switch.toggle: micky_elmo_output
+  - platform: gpio
+    name: "button2"
+    pin: D6
+    on_press:
+      then:
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+        - delay: 0.5s
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+        - delay: 0.5s
+        - switch.turn_on: gpio_d7
+        - delay: 0.5s
+        - switch.turn_off: gpio_d7
+    on_click:
+      min_length: 2000ms
+      max_length: 10000ms
+      then:
+        - switch.toggle: micky_elmo_output
