@@ -1,0 +1,12 @@
+---
+version: "2.11"
+services:
+  esp-home:
+    container_name: esp-home
+    image: esphome/esphome
+    network_mode: host
+    volumes:
+      - ./:/config
+    # verify the USB# or comment out devices if no dev is connected
+    devices:
+      - /dev/ttyUSB2:/dev/ttyUSB2

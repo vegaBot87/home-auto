@@ -1,24 +1,17 @@
 esphome:
-  name: stairs_up_hallway_sensor
-  platform: ESP8266
+  name: stairs-up-hallway-sensor
+
+esp8266:
   board: nodemcuv2
 
 wifi:
-  ssid: "el_barto"
-  password: "Remythechef6!!"
-
-  # manual ip setting will not appear in router ip list
-  # instead set this manual ip setting in router
-  manual_ip:
-    # Set this to the IP of the ESP
-    static_ip: <static_ip>
-    gateway: <gateway>
-    subnet: <subnet>
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
     
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Stairs Up Hallway Sensor"
-    password: "<password>"
+    password: !secret ap_password
 
 captive_portal:
 
@@ -27,11 +20,11 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: "<password>"
+  password: !secret api_password
 
 ota:
-  password: "<password>"
-
+  password: !secret ota_password
+  
 # input motion on D7
 # input motion on D6
     
@@ -48,3 +41,7 @@ binary_sensor:
     name: "up_hallway_motion"
     device_class: motion
     pin: D7
+    
+switch:
+  - platform: restart
+    name: "stairs_up_hallway Restart"

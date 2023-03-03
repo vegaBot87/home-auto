@@ -1,24 +1,17 @@
 esphome:
   name: micky_elmo
-  platform: ESP8266
+  
+esp8266:
   board: nodemcuv2
-
+  
 wifi:
-  ssid: "<ssid>"
-  password: "<password>"
-
-  # manual ip setting will not appear in router ip list
-  # instead set this manual ip setting in router
-  manual_ip:
-    # Set this to the IP of the ESP
-    static_ip: <static_ip>
-    gateway: <gateway>
-    subnet: <subnet>
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
     
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Micky Elmo Fallback Hotspot"
-    password: "<password>"
+    password: !secret ap_password
 
 captive_portal:
 
@@ -27,10 +20,10 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: "<password>"
+  password: !secret api_password
 
 ota:
-  password: "<password>"
+  password: !secret ota_password
   
 output:
   - platform: gpio
