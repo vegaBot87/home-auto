@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ="America/Los_Angeles"
+      - VERSION=docker
+      - PLEX_CLAIM="<plex_claim>"
+    volumes:
+      - ./database:/config
+      - ./transcode:/transcode
+      - /media:/data
+      - ./transmission/completed/completed:/data/completed
